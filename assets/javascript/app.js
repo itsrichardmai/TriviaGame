@@ -81,6 +81,7 @@ var trivialGame = {
             playerCorrect: 0,
             playerIncorrect: 0,
             playerMissed: 0,
+            userGuess: [],
     
     }
 
@@ -91,7 +92,7 @@ $(document).ready(function(){
         }, 10000);
         for (var i = 0; i < trivialGame.questions.length; i++) {
             var formQuestion = $("<form>");
-            
+            formQuestion.attr('name', 'form' )
             formQuestion.text(trivialGame.questions[i].q)
             formQuestion.addClass("card form-check form-check-inline");
 
@@ -121,7 +122,7 @@ $(document).ready(function(){
             let label = $("<label>");
             //label.addClass('card-text form-check-label');
             label.text("" + trivialGame.questions[i].a[j]);
-            formAnswer.attr('name', "question");
+            formAnswer.attr('name', "answer");
             formAnswer.attr('value', trivialGame.questions[i].a[j]);
             console.log(trivialGame.questions[i].a[j]);
             // formAnswer.html("" + trivialGame.questions[i].a[j]);
@@ -150,7 +151,7 @@ $(document).ready(function(){
 $(document).on('onchange', ".value", changeGuess); 
 
 function changeGuess() {
-    userGuess = $(this).val()
+    
 }
 
 function checkGuess() {
@@ -169,4 +170,15 @@ function checkGuess() {
 }
     //  some notes:
     //  step1) create a global variable called 
-$("")
+
+
+    function validateForm() {
+        for (var i = 0; i < trivialGame.questions.length; i ++) {
+            var x = document.forms["form"]["answer"].value;
+            if (x === trivialGame.questions[i].correctA ) {
+                playerScore++;
+            } else {
+                trivialGame.playerIncorrect++;
+            }
+        }
+    }
